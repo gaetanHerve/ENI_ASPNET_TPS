@@ -36,10 +36,11 @@ namespace MODULE3_TP1
         {
             InitialiserDatas();
 
+
             Console.WriteLine("______________________________________\n");
             Console.WriteLine("Pénoms des auteurs dont le nom commence par un G :\n");
-            var auteursNomCommencantParG = ListeAuteurs.Where(a => a.Nom.Substring(0, 1) == "G");
-            foreach (var auteur in auteursNomCommencantParG)
+            IEnumerable<Auteur> auteursNomCommencantParG = ListeAuteurs.Where(a => a.Nom.Substring(0, 1) == "G");
+            foreach (Auteur auteur in auteursNomCommencantParG)
             {
                 Console.WriteLine($"{auteur.Prenom}");
             }
@@ -49,22 +50,21 @@ namespace MODULE3_TP1
             Console.WriteLine("Auteur ayant écrit le plus de livres :\n");
             Auteur auteurProlifique = ListeAuteurs[0];
             int maxLivres = 0;
-            foreach (var auteur in ListeAuteurs)
+            foreach (Auteur auteur in ListeAuteurs)
             {
-                var nbLivres = ListeLivres.Where(l => l.Auteur == auteur).Count();
+                int nbLivres = ListeLivres.Where(l => l.Auteur == auteur).Count();
                 if (nbLivres > maxLivres)
                 {
                     auteurProlifique = auteur;
                     maxLivres = nbLivres;
                 }
             }
-
             Console.WriteLine($"{auteurProlifique.Prenom} {auteurProlifique.Nom}");
+
 
             Console.WriteLine("______________________________________\n");
             Console.WriteLine("Nombre moyen de pages par livre et par auteur :\n");
-
-            foreach (var auteur in ListeAuteurs)
+            foreach (Auteur auteur in ListeAuteurs)
             {
                 var livresAuteur = ListeLivres.Where(l => l.Auteur == auteur);
                 var nbLivres = livresAuteur.Count();
@@ -81,50 +81,52 @@ namespace MODULE3_TP1
                 } else
                 {
                     Console.WriteLine("N'a écrit aucun livre de cette liste");
-                }
-                
+                }  
             }
+
 
             Console.WriteLine("______________________________________\n");
             Console.WriteLine("Titre du livre avec le plus de pages :\n");
-
-            Livre plusGrosLivre = ListeLivres[0];
-            int maxPages = 0;
-            foreach (var livre in ListeLivres)
-            {
-                var nbPages = livre.NbPages;
-                if (nbPages > maxPages)
-                {
-                    plusGrosLivre = livre;
-                    maxPages = nbPages;
-                }
-            }
+            Livre plusGrosLivre = ListeLivres.OrderByDescending(l => l.NbPages).FirstOrDefault();
             Console.WriteLine($"{plusGrosLivre.Titre}");
 
 
             Console.WriteLine("______________________________________\n");
-
-            var moyenne = ListeAuteurs.SelectMany(a => a.Factures).Select(f=>f.Montant).Average();
-
+            decimal moyenne = ListeAuteurs.SelectMany(a => a.Factures).Select(f => f.Montant).Average();
             Console.WriteLine($"En moyenne, les auteurs ont gagné : {moyenne} euros");
 
 
             Console.WriteLine("______________________________________\n");
-
-
-            foreach (var auteur in ListeAuteurs)
-                
+            Console.WriteLine("Liste des livres par auteur :\n");
+            foreach (Auteur auteur in ListeAuteurs)     
             {
                 Console.WriteLine($"Auteur : {auteur.Prenom} {auteur.Nom}");
                 Console.WriteLine("Livres : ");
-                var titres = ListeLivres.Where(l => l.Auteur == auteur).Select(l => l.Titre);
-                foreach (var titre in titres)
+                IEnumerable<string> titres = ListeLivres.Where(l => l.Auteur == auteur).Select(l => l.Titre);
+                foreach (string titre in titres)
                 {
                     Console.WriteLine($"{titre}");
                 }
-
             }
 
+            Console.WriteLine("______________________________________\n");
+            Console.WriteLine("Liste des livres triés par ordre alphabétique :\n");
+            List<string> listeTriee = ListeLivres.Select(l => l.Titre).OrderBy(t => t).ToList();
+
+            listeTriee.ForEach( s =>
+          {
+              Console.WriteLine(s);
+          });
+
+            Console.WriteLine("______________________________________\n");
+            Console.WriteLine("Liste des livres dont le nombre de pages est supérieur à la moyenne :\n");
+            double moyennePages = ListeLivres.Average(l => l.NbPages);
+            var livresSup = ListeLivres.Where(l => l.NbPages > moyennePages);
+
+            foreach (var livre in livresSup)
+            {
+                Console.WriteLine($"{livre.Titre}");
+            }
 
             Console.ReadKey();
         }
