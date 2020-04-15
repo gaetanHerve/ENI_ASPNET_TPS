@@ -34,8 +34,61 @@ namespace MODULE3_TP1
         }
         static void Main(string[] args)
         {
+            InitialiserDatas();
 
-        
+            Console.WriteLine("______________________________________\n");
+            Console.WriteLine("Pénoms des auteurs dont le nom commence par un G :\n");
+            var auteursNomCommencantParG = ListeAuteurs.Where(a => a.Nom.Substring(0, 1) == "G");
+            foreach (var auteur in auteursNomCommencantParG)
+            {
+                Console.WriteLine($"{auteur.Prenom}");
+            }
+
+
+            Console.WriteLine("______________________________________\n");
+            Console.WriteLine("Auteur ayant écrit le plus de livres :\n");
+            Auteur auteurProlifique = ListeAuteurs[0];
+            int maxLivres = 0;
+            foreach (var auteur in ListeAuteurs)
+            {
+                var nbLivres = ListeLivres.Where(l => l.Auteur == auteur).Count();
+                if (nbLivres > maxLivres)
+                {
+                    auteurProlifique = auteur;
+                    maxLivres = nbLivres;
+                }
+            }
+
+            Console.WriteLine($"{auteurProlifique.Prenom} {auteurProlifique.Nom}");
+
+            Console.WriteLine("______________________________________\n");
+            Console.WriteLine("Nombre moyen de pages par livre et par auteur :\n");
+
+            foreach (var auteur in ListeAuteurs)
+            {
+                var livresAuteur = ListeLivres.Where(l => l.Auteur == auteur);
+                var nbLivres = livresAuteur.Count();
+                var pagesLivres = ListeLivres.Where(l => l.Auteur == auteur).Select(l => l.NbPages);
+                int totalPages = 0;
+
+                foreach (var pagesLivre in pagesLivres)
+                {
+                    totalPages += pagesLivre;
+                }
+                Console.WriteLine($"{auteur.Prenom} {auteur.Nom} : ");
+                if (nbLivres > 0) {
+                    Console.WriteLine(totalPages / nbLivres);
+                } else
+                {
+                    Console.WriteLine("N'a pas écrit de livres dans la liste");
+                }
+                
+            }
+
+            Console.WriteLine("______________________________________\n");
+            Console.WriteLine("Titre du livre avec le plus de pages :\n");
+
+            Console.ReadKey();
         }
     }
 }
