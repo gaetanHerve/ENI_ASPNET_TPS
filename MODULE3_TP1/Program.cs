@@ -80,13 +80,51 @@ namespace MODULE3_TP1
                     Console.WriteLine(totalPages / nbLivres);
                 } else
                 {
-                    Console.WriteLine("N'a pas écrit de livres dans la liste");
+                    Console.WriteLine("N'a écrit aucun livre de cette liste");
                 }
                 
             }
 
             Console.WriteLine("______________________________________\n");
             Console.WriteLine("Titre du livre avec le plus de pages :\n");
+
+            Livre plusGrosLivre = ListeLivres[0];
+            int maxPages = 0;
+            foreach (var livre in ListeLivres)
+            {
+                var nbPages = livre.NbPages;
+                if (nbPages > maxPages)
+                {
+                    plusGrosLivre = livre;
+                    maxPages = nbPages;
+                }
+            }
+            Console.WriteLine($"{plusGrosLivre.Titre}");
+
+
+            Console.WriteLine("______________________________________\n");
+
+            var moyenne = ListeAuteurs.SelectMany(a => a.Factures).Select(f=>f.Montant).Average();
+
+            Console.WriteLine($"En moyenne, les auteurs ont gagné : {moyenne} euros");
+
+
+            Console.WriteLine("______________________________________\n");
+
+
+            foreach (var auteur in ListeAuteurs)
+                
+            {
+                Console.WriteLine($"Auteur : {auteur.Prenom} {auteur.Nom}");
+                Console.WriteLine("Livres : ");
+                var titres = ListeLivres.Where(l => l.Auteur == auteur).Select(l => l.Titre);
+                foreach (var titre in titres)
+                {
+                    Console.WriteLine($"{titre}");
+                }
+
+            }
+
 
             Console.ReadKey();
         }
