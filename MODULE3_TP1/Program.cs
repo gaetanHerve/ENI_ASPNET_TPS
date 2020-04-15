@@ -81,7 +81,7 @@ namespace MODULE3_TP1
                 } else
                 {
                     Console.WriteLine("N'a écrit aucun livre de cette liste");
-                }  
+                }
             }
 
 
@@ -98,7 +98,7 @@ namespace MODULE3_TP1
 
             Console.WriteLine("______________________________________\n");
             Console.WriteLine("Liste des livres par auteur :\n");
-            foreach (Auteur auteur in ListeAuteurs)     
+            foreach (Auteur auteur in ListeAuteurs)
             {
                 Console.WriteLine($"Auteur : {auteur.Prenom} {auteur.Nom}");
                 Console.WriteLine("Livres : ");
@@ -113,10 +113,10 @@ namespace MODULE3_TP1
             Console.WriteLine("Liste des livres triés par ordre alphabétique :\n");
             List<string> listeTriee = ListeLivres.Select(l => l.Titre).OrderBy(t => t).ToList();
 
-            listeTriee.ForEach( s =>
-          {
-              Console.WriteLine(s);
-          });
+            listeTriee.ForEach(s =>
+         {
+             Console.WriteLine(s);
+         });
 
             Console.WriteLine("______________________________________\n");
             Console.WriteLine("Liste des livres dont le nombre de pages est supérieur à la moyenne :\n");
@@ -127,6 +127,11 @@ namespace MODULE3_TP1
             {
                 Console.WriteLine($"{livre.Titre}");
             }
+
+            Console.WriteLine("______________________________________\n");
+            Console.WriteLine("Auteur ayant écrit le moins de livres :\n");
+            var auteurMoinsProlifique = ListeAuteurs.OrderBy(a => ListeLivres.Where(l => l.Auteur == a).Count()).FirstOrDefault();
+            Console.WriteLine($"{auteurMoinsProlifique.Prenom} { auteurMoinsProlifique.Nom}");
 
             Console.ReadKey();
         }
