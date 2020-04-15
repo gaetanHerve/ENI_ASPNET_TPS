@@ -36,6 +36,7 @@ namespace MODULE3_TP1
         {
             InitialiserDatas();
 
+
             Console.WriteLine("______________________________________\n");
             Console.WriteLine("Pénoms des auteurs dont le nom commence par un G :\n");
             var auteursNomCommencantParG = ListeAuteurs.Where(a => a.Nom.Substring(0, 1) == "G");
@@ -58,12 +59,11 @@ namespace MODULE3_TP1
                     maxLivres = nbLivres;
                 }
             }
-
             Console.WriteLine($"{auteurProlifique.Prenom} {auteurProlifique.Nom}");
+
 
             Console.WriteLine("______________________________________\n");
             Console.WriteLine("Nombre moyen de pages par livre et par auteur :\n");
-
             foreach (var auteur in ListeAuteurs)
             {
                 var livresAuteur = ListeLivres.Where(l => l.Auteur == auteur);
@@ -81,13 +81,12 @@ namespace MODULE3_TP1
                 } else
                 {
                     Console.WriteLine("N'a écrit aucun livre de cette liste");
-                }
-                
+                }  
             }
+
 
             Console.WriteLine("______________________________________\n");
             Console.WriteLine("Titre du livre avec le plus de pages :\n");
-
             Livre plusGrosLivre = ListeLivres[0];
             int maxPages = 0;
             foreach (var livre in ListeLivres)
@@ -103,17 +102,13 @@ namespace MODULE3_TP1
 
 
             Console.WriteLine("______________________________________\n");
-
             var moyenne = ListeAuteurs.SelectMany(a => a.Factures).Select(f=>f.Montant).Average();
-
             Console.WriteLine($"En moyenne, les auteurs ont gagné : {moyenne} euros");
 
 
             Console.WriteLine("______________________________________\n");
-
-
-            foreach (var auteur in ListeAuteurs)
-                
+            Console.WriteLine("Liste des livres par auteur :\n");
+            foreach (var auteur in ListeAuteurs)     
             {
                 Console.WriteLine($"Auteur : {auteur.Prenom} {auteur.Nom}");
                 Console.WriteLine("Livres : ");
@@ -122,9 +117,7 @@ namespace MODULE3_TP1
                 {
                     Console.WriteLine($"{titre}");
                 }
-
             }
-
 
             Console.ReadKey();
         }
