@@ -15,6 +15,7 @@ namespace MODULE5_TP2.Utils
         {
             ingredientsDisponibles = this.GetIngredients();
             patesDisponibles = this.GetPates();
+            /*pizzas = this.GetPizzas();*/
         }
 
         public static FakeDbPizza Instance
@@ -79,5 +80,16 @@ namespace MODULE5_TP2.Utils
                 new Pate{ Id=i++,Nom="Pate épaisse, base tomate"}
             };
         }
+
+        /*private List<Pizza> GetPizzas()
+        {
+            var i = 1;
+            return new List<Pizza>
+            {
+                new Pizza { Id = 1, Nom = "PizzaTest", Pate = patesDisponibles[1], Ingredients = new List<Ingredient> { ingredientsDisponibles[1] } }
+            };
+        }*/
+
+        
     }
 }
