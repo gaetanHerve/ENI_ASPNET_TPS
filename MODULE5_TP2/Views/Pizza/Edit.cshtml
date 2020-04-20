@@ -1,0 +1,13 @@
+﻿@model MODULE5_TP2.Models.PizzaVM
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@Html.Partial("_PizzaEditor", Model)
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

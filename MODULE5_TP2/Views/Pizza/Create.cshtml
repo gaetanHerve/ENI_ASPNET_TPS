@@ -1,0 +1,13 @@
+﻿@model MODULE5_TP2.Models.PizzaVM
+
+@{
+    ViewBag.Title = "Creation d'une pizza";
+}
+
+<h2>Create</h2>
+
+@Html.Partial("_PizzaEditor", Model)
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
