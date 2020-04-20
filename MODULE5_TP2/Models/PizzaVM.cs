@@ -11,5 +11,14 @@ namespace MODULE5_TP2.Models
         public Pizza Pizza { get; set; }
         public List<Ingredient> Ingredients { get; set; }
         public List<Pate> Pates { get; set; }
+        public List<int> IdIngredients { get; set; }
+        public int IdPate { get; set; }
+
+        public Pizza GetPizzaFromPizzaVm()
+        {
+            // A Coder pour factorisation code
+            Pizza pizza = this.Pizza;
+            return pizza;
+        }
     }
 }

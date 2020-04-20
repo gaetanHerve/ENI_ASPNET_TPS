@@ -13,6 +13,7 @@ namespace MODULE5_TP2.Controllers
         static List<Ingredient> ingredientsDisponibles = Utils.FakeDbPizza.Instance.IngredientsDisponibles;
         static List<Pate> patesDisponibles = Utils.FakeDbPizza.Instance.PatesDisponibles;
         static List<Pizza> listePizzas = Utils.FakeDbPizza.Instance.Pizzas;
+        static int idPizza = 1;
         // GET: Pizza
         public ActionResult Index()
         {
@@ -39,12 +40,11 @@ namespace MODULE5_TP2.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-                Pizza pizza = pizzaVm.Pizza;
-                pizza.Ingredients = pizzaVm.Ingredients;
-                /*pizza.Pate = pizzaVm.Pates;*/
-                // Dans Liste pizza ou dans FakeDb directement ?
+                Pizza pizza = new Pizza() { Id = idPizza, Nom = pizzaVm.Pizza.Nom};
+                pizza.Pate = patesDisponibles.FirstOrDefault(p => p.Id == pizzaVm.IdPate);
+                pizza.Ingredients = ingredientsDisponibles.Where(i => pizzaVm.IdIngredients.Contains(i.Id)).ToList();
                 listePizzas.Add(pizza);
+                idPizza++;
                 return RedirectToAction("Index");
             }
             catch
@@ -56,17 +56,35 @@ namespace MODULE5_TP2.Controllers
         // GET: Pizza/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Pizza pizza = listePizzas.FirstOrDefault(p => p.Id == id);
+            List<int> idIngredients = new List<int>();
+
+            foreach (Ingredient ingredient in pizza.Ingredients)
+            {
+                idIngredients.Add(ingredient.Id);
+            }
+
+            PizzaVM pizzaVm = new PizzaVM()
+            {
+                Pizza = pizza,
+                IdPate = pizza.Pate.Id,
+                IdIngredients = idIngredients,
+                Ingredients = ingredientsDisponibles,
+                Pates = patesDisponibles
+            };
+            return View(pizzaVm);
         }
 
         // POST: Pizza/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, PizzaVM pizzaVm)
         {
             try
             {
-                // TODO: Add update logic here
-
+                Pizza pizza = listePizzas.FirstOrDefault(p => p.Id == id);
+                pizza.Nom = pizzaVm.Pizza.Nom;
+                pizza.Ingredients = ingredientsDisponibles.Where(i => pizzaVm.IdIngredients.Contains(i.Id)).ToList();
+                pizza.Pate = patesDisponibles.FirstOrDefault(p => p.Id == pizzaVm.IdPate);
                 return RedirectToAction("Index");
             }
             catch
@@ -78,16 +96,17 @@ namespace MODULE5_TP2.Controllers
         // GET: Pizza/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Pizza pizza = listePizzas.FirstOrDefault(p => p.Id == id);
+            return View(pizza);
         }
 
         // POST: Pizza/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, Pizza pizza)
         {
             try
             {
-                // TODO: Add delete logic here
+                listePizzas.Remove(listePizzas.FirstOrDefault(p => p.Id == id));
 
                 return RedirectToAction("Index");
             }
