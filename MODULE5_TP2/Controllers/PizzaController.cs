@@ -4,33 +4,30 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MODULE5_TP2.Models;
+using MODULE5_TP2.Utils;
 using MODULE5_TP2_BO;
 
 namespace MODULE5_TP2.Controllers
 {
     public class PizzaController : Controller
     {
-        static List<Ingredient> ingredientsDisponibles = Utils.FakeDbPizza.Instance.IngredientsDisponibles;
-        static List<Pate> patesDisponibles = Utils.FakeDbPizza.Instance.PatesDisponibles;
-        static List<Pizza> listePizzas = Utils.FakeDbPizza.Instance.Pizzas;
-        static int idPizza = 1;
         // GET: Pizza
         public ActionResult Index()
         {
-            return View(listePizzas);
+            return View(FakeDbPizza.Instance.Pizzas);
         }
 
         // GET: Pizza/Details/5
         public ActionResult Details(int id)
         {
-            Pizza pizza = listePizzas.FirstOrDefault(p => p.Id == id);
+            Pizza pizza = FakeDbPizza.Instance.Pizzas.FirstOrDefault(p => p.Id == id);
             return View(pizza);
         }
 
         // GET: Pizza/Create
         public ActionResult Create()
         {
-            PizzaVM pizzaVm = new PizzaVM() { Pizza = new Pizza(), Ingredients = ingredientsDisponibles, Pates = patesDisponibles };
+            PizzaVM pizzaVm = new PizzaVM() { Pizza = new Pizza(), Ingredients = FakeDbPizza.Instance.IngredientsDisponibles, Pates = FakeDbPizza.Instance.PatesDisponibles };
             return View(pizzaVm);
         }
 
@@ -40,23 +37,36 @@ namespace MODULE5_TP2.Controllers
         {
             try
             {
-                Pizza pizza = new Pizza() { Id = idPizza, Nom = pizzaVm.Pizza.Nom};
-                pizza.Pate = patesDisponibles.FirstOrDefault(p => p.Id == pizzaVm.IdPate);
-                pizza.Ingredients = ingredientsDisponibles.Where(i => pizzaVm.IdIngredients.Contains(i.Id)).ToList();
-                listePizzas.Add(pizza);
-                idPizza++;
-                return RedirectToAction("Index");
+                if (ModelState.IsValid && ValidateVM(pizzaVm))
+                {
+                    if (IsNameUnique(pizzaVm) && IsIngredientListUnique(pizzaVm))
+                    {
+                        Pizza pizza = new Pizza();
+                        pizza.Id = FakeDbPizza.Instance.Pizzas.Count == 0 ? 1 : FakeDbPizza.Instance.Pizzas.Max(x => x.Id) + 1;
+                        pizza.Nom = pizzaVm.Pizza.Nom;
+                        pizza.Pate = FakeDbPizza.Instance.PatesDisponibles.FirstOrDefault(p => p.Id == pizzaVm.IdPate);
+                        pizza.Ingredients = FakeDbPizza.Instance.IngredientsDisponibles.Where(i => pizzaVm.IdIngredients.Contains(i.Id)).ToList();
+                        FakeDbPizza.Instance.Pizzas.Add(pizza);
+                        return RedirectToAction("Index");
+                    }
+                }
+                pizzaVm.Ingredients = FakeDbPizza.Instance.IngredientsDisponibles;
+                pizzaVm.Pates = FakeDbPizza.Instance.PatesDisponibles;
+                return View(pizzaVm);
             }
             catch
             {
-                return View();
+                /*PizzaVM pizzaBCKP = new PizzaVM() { Pizza = new Pizza(), Ingredients = FakeDbPizza.Instance.IngredientsDisponibles, Pates = FakeDbPizza.Instance.PatesDisponibles };*/
+                pizzaVm.Ingredients = FakeDbPizza.Instance.IngredientsDisponibles;
+                pizzaVm.Pates = FakeDbPizza.Instance.PatesDisponibles;
+                return View(pizzaVm);
             }
         }
 
         // GET: Pizza/Edit/5
         public ActionResult Edit(int id)
         {
-            Pizza pizza = listePizzas.FirstOrDefault(p => p.Id == id);
+            Pizza pizza = FakeDbPizza.Instance.Pizzas.FirstOrDefault(p => p.Id == id);
             List<int> idIngredients = new List<int>();
 
             foreach (Ingredient ingredient in pizza.Ingredients)
@@ -69,9 +79,11 @@ namespace MODULE5_TP2.Controllers
                 Pizza = pizza,
                 IdPate = pizza.Pate.Id,
                 IdIngredients = idIngredients,
-                Ingredients = ingredientsDisponibles,
-                Pates = patesDisponibles
+                Ingredients = FakeDbPizza.Instance.IngredientsDisponibles,
+                Pates = FakeDbPizza.Instance.PatesDisponibles
             };
+
+
             return View(pizzaVm);
         }
 
@@ -80,23 +92,32 @@ namespace MODULE5_TP2.Controllers
         public ActionResult Edit(int id, PizzaVM pizzaVm)
         {
             try
-            {
-                Pizza pizza = listePizzas.FirstOrDefault(p => p.Id == id);
-                pizza.Nom = pizzaVm.Pizza.Nom;
-                pizza.Ingredients = ingredientsDisponibles.Where(i => pizzaVm.IdIngredients.Contains(i.Id)).ToList();
-                pizza.Pate = patesDisponibles.FirstOrDefault(p => p.Id == pizzaVm.IdPate);
-                return RedirectToAction("Index");
+            { 
+                if (IsNameUnique(pizzaVm) && IsIngredientListUnique(pizzaVm))
+                {
+                    Pizza pizza = FakeDbPizza.Instance.Pizzas.FirstOrDefault(p => p.Id == id);
+                    pizza.Nom = pizzaVm.Pizza.Nom;
+                    pizza.Ingredients = FakeDbPizza.Instance.IngredientsDisponibles.Where(i => pizzaVm.IdIngredients.Contains(i.Id)).ToList();
+                    pizza.Pate = FakeDbPizza.Instance.PatesDisponibles.FirstOrDefault(p => p.Id == pizzaVm.IdPate);
+                    return RedirectToAction("Index");
+                }
+                pizzaVm.Ingredients = FakeDbPizza.Instance.IngredientsDisponibles;
+                pizzaVm.Pates = FakeDbPizza.Instance.PatesDisponibles;
+                return View(pizzaVm);
+
             }
             catch
             {
-                return View();
+                pizzaVm.Ingredients = FakeDbPizza.Instance.IngredientsDisponibles;
+                pizzaVm.Pates = FakeDbPizza.Instance.PatesDisponibles;
+                return View(pizzaVm);
             }
         }
 
         // GET: Pizza/Delete/5
         public ActionResult Delete(int id)
         {
-            Pizza pizza = listePizzas.FirstOrDefault(p => p.Id == id);
+            Pizza pizza = FakeDbPizza.Instance.Pizzas.FirstOrDefault(p => p.Id == id);
             return View(pizza);
         }
 
@@ -106,7 +127,7 @@ namespace MODULE5_TP2.Controllers
         {
             try
             {
-                listePizzas.Remove(listePizzas.FirstOrDefault(p => p.Id == id));
+                FakeDbPizza.Instance.Pizzas.Remove(FakeDbPizza.Instance.Pizzas.FirstOrDefault(p => p.Id == id));
 
                 return RedirectToAction("Index");
             }
@@ -115,5 +136,37 @@ namespace MODULE5_TP2.Controllers
                 return View();
             }
         }
+        private bool ValidateVM(PizzaVM vm)
+        {
+            bool result = true;
+            return result;
+        }
+
+        private bool IsNameUnique(PizzaVM vm)
+        {
+            // TODO : Dans le cas d'un edit, Retirer la pizza que l'on édite de la liste des pizzas comparer
+            bool result = !FakeDbPizza.Instance.Pizzas.Any(p => p.Nom == vm.Pizza.Nom);
+            if (!result)
+                ModelState.AddModelError("", "Il existe déjà une pizza portant ce nom");
+            return result;
+        }
+
+        private bool IsIngredientListUnique(PizzaVM vm)
+        {
+            // TODO : Dans le cas d'un edit, Retirer la pizza que l'on édite de la liste des pizzas comparer
+            bool result = true;
+
+            foreach (var pizza in FakeDbPizza.Instance.Pizzas)
+            {
+                if (pizza.Ingredients.Select(i => i.Id).SequenceEqual(vm.IdIngredients))
+                {
+                    result = false;
+                    ModelState.AddModelError("", "Il existe déjà une pizza composée de ces ingrédients");
+                    break;
+                }
+            }
+            return result;
+        }
+
     }
 }

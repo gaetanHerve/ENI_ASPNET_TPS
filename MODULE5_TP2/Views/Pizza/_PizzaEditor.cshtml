@@ -16,15 +16,19 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Pates, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.DropDownListFor(model => model.IdPate, Model.Pates.Select(item => new SelectListItem { Text = item.Nom, Value = item.Id.ToString() }))
-        </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Pates, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.DropDownListFor(model => model.IdPate, Model.Pates.Select(item => new SelectListItem { Text = item.Nom, Value = item.Id.ToString() }), "Sélectionner une pate")
+        <br />
+        @Html.ValidationMessageFor(model => model.IdPate, "", new { @class = "text-danger" })
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Ingredients, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.ListBoxFor(model => model.IdIngredients, Model.Ingredients.Select(item => new SelectListItem { Text = item.Nom, Value = item.Id.ToString() }))
-        </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Ingredients, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.ListBoxFor(model => model.IdIngredients, Model.Ingredients.Select(item => new SelectListItem { Text = item.Nom, Value = item.Id.ToString() }))
+        <br />
+       @Html.ValidationMessageFor(model => model.IdIngredients, "", new { @class = "text-danger" })
+    </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
