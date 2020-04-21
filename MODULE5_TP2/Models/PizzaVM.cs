@@ -17,7 +17,8 @@ namespace MODULE5_TP2.Models
 
         [Required]
         [DisplayName("Ingrédients")]
-   /*     [MaxLength(5)]
+   /*     Utiliser ValidationAttribute !!!
+    *     [MaxLength(5)]
         [MinLength(2)]*/
         public List<int> IdIngredients { get; set; }
 
