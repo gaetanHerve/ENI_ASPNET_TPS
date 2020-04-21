@@ -39,7 +39,7 @@ namespace MODULE5_TP2.Controllers
             {
                 if (ModelState.IsValid && ValidateVM(pizzaVm))
                 {
-                    if (IsNameUnique(pizzaVm) && IsIngredientListUnique(pizzaVm))
+                    if (ModelState.IsValid && IsNameUnique(pizzaVm) && IsIngredientListUnique(pizzaVm))
                     {
                         Pizza pizza = new Pizza();
                         pizza.Id = FakeDbPizza.Instance.Pizzas.Count == 0 ? 1 : FakeDbPizza.Instance.Pizzas.Max(x => x.Id) + 1;
@@ -93,7 +93,7 @@ namespace MODULE5_TP2.Controllers
         {
             try
             { 
-                if (IsNameUnique(pizzaVm) && IsIngredientListUnique(pizzaVm))
+                if (ModelState.IsValid && IsNameUnique(pizzaVm) && IsIngredientListUnique(pizzaVm))
                 {
                     Pizza pizza = FakeDbPizza.Instance.Pizzas.FirstOrDefault(p => p.Id == id);
                     pizza.Nom = pizzaVm.Pizza.Nom;

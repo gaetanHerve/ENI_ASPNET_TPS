@@ -25,7 +25,7 @@ namespace MODULE5_TP2.Models
         [DisplayName("Pates")]
         public int IdPate { get; set; }
 
-        public Pizza GetPizzaFromPizzaVm()
+        public Pizza GetPizzaFromPizzaVm(PizzaVM pizzaVm)
         {
             // A Coder pour factorisation code
             // plutôt une propriété en readonly
