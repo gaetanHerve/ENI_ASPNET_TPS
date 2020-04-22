@@ -127,43 +127,20 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ArmesController.cs" />
+    <Compile Include="Controllers\ArtMartialsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SamouraisController.cs" />
     <Compile Include="Data\MODULE6_TP1Context.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004211243098_init.cs" />
-    <Compile Include="Migrations\202004211243098_init.Designer.cs">
-      <DependentUpon>202004211243098_init.cs</DependentUpon>
+    <Compile Include="Migrations\202004221341213_m1.cs" />
+    <Compile Include="Migrations\202004221341213_m1.Designer.cs">
+      <DependentUpon>202004221341213_m1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004211309221_m2.cs" />
-    <Compile Include="Migrations\202004211309221_m2.Designer.cs">
-      <DependentUpon>202004211309221_m2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004211447100_m3.cs" />
-    <Compile Include="Migrations\202004211447100_m3.Designer.cs">
-      <DependentUpon>202004211447100_m3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004211508260_m4.cs" />
-    <Compile Include="Migrations\202004211508260_m4.Designer.cs">
-      <DependentUpon>202004211508260_m4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004211511365_m5.cs" />
-    <Compile Include="Migrations\202004211511365_m5.Designer.cs">
-      <DependentUpon>202004211511365_m5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004220924249_m6.cs" />
-    <Compile Include="Migrations\202004220924249_m6.Designer.cs">
-      <DependentUpon>202004220924249_m6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004221205448_m7.cs" />
-    <Compile Include="Migrations\202004221205448_m7.Designer.cs">
-      <DependentUpon>202004221205448_m7.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004221221067_m8.cs" />
-    <Compile Include="Migrations\202004221221067_m8.Designer.cs">
-      <DependentUpon>202004221221067_m8.cs</DependentUpon>
+    <Compile Include="Migrations\202004221417164_m2.cs" />
+    <Compile Include="Migrations\202004221417164_m2.Designer.cs">
+      <DependentUpon>202004221417164_m2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SamouraiVM.cs" />
@@ -215,6 +192,11 @@
     <Content Include="Views\Armes\Details.cshtml" />
     <Content Include="Views\Armes\Edit.cshtml" />
     <Content Include="Views\Armes\Index.cshtml" />
+    <Content Include="Views\ArtMartials\Create.cshtml" />
+    <Content Include="Views\ArtMartials\Delete.cshtml" />
+    <Content Include="Views\ArtMartials\Details.cshtml" />
+    <Content Include="Views\ArtMartials\Edit.cshtml" />
+    <Content Include="Views\ArtMartials\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -239,29 +221,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004211243098_init.resx">
-      <DependentUpon>202004211243098_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004221341213_m1.resx">
+      <DependentUpon>202004221341213_m1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004211309221_m2.resx">
-      <DependentUpon>202004211309221_m2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004211447100_m3.resx">
-      <DependentUpon>202004211447100_m3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004211508260_m4.resx">
-      <DependentUpon>202004211508260_m4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004211511365_m5.resx">
-      <DependentUpon>202004211511365_m5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004220924249_m6.resx">
-      <DependentUpon>202004220924249_m6.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004221205448_m7.resx">
-      <DependentUpon>202004221205448_m7.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004221221067_m8.resx">
-      <DependentUpon>202004221221067_m8.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004221417164_m2.resx">
+      <DependentUpon>202004221417164_m2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

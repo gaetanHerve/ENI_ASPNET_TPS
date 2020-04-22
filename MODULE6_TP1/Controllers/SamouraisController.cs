@@ -43,7 +43,8 @@ namespace MODULE6_TP1.Controllers
             SamouraiVM samouraiVm = new SamouraiVM()
             {
                 Samourai = new Samourai(),
-                ArmesDisponibles = db.Armes.ToList()
+                ArmesDisponibles = db.Armes.ToList(),
+                ArtsDisponibles = db.ArtMartials.ToList()
             };
             return View(samouraiVm);
         }
@@ -63,6 +64,10 @@ namespace MODULE6_TP1.Controllers
                     Force = samouraiVm.Samourai.Force,
                     Arme = db.Armes.SingleOrDefault(a => a.Id == samouraiVm.IdArme)
                 };
+                if (samouraiVm.IdsSelectedArts.Count > 0)
+                {
+                    samourai.ArtsMartiaux = db.ArtMartials.Where(adb => samouraiVm.IdsSelectedArts.Any(avm => avm == adb.Id)).ToList();
+                }
                 db.Samourais.Add(samourai);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -86,7 +91,8 @@ namespace MODULE6_TP1.Controllers
             SamouraiVM samouraiVm = new SamouraiVM()
             {
                 Samourai = samourai,
-                ArmesDisponibles = db.Armes.ToList()
+                ArmesDisponibles = db.Armes.ToList(),
+                ArtsDisponibles = db.ArtMartials.ToList()
             };
             if (samourai.Arme != null)
             {
@@ -104,7 +110,7 @@ namespace MODULE6_TP1.Controllers
         {
             if (ModelState.IsValid)
             {
-                Samourai samourai = db.Samourais.Include(x => x.Arme).FirstOrDefault(x => x.Id == samouraiVm.Samourai.Id);
+                Samourai samourai = db.Samourais.Include(s => s.Arme).Include(s => s.ArtsMartiaux).FirstOrDefault(x => x.Id == samouraiVm.Samourai.Id);
                 
                 /*db.Samourais.Attach(samourai);*/
                 
@@ -116,6 +122,10 @@ namespace MODULE6_TP1.Controllers
                 } else
                 {
                     samourai.Arme = null;
+                }
+                if (samouraiVm.IdsSelectedArts.Count > 0)
+                {
+                    samourai.ArtsMartiaux = db.ArtMartials.Where(adb => samouraiVm.IdsSelectedArts.Any(avm => avm == adb.Id)).ToList();
                 }
                 
                 db.Entry(samourai).State = EntityState.Modified;

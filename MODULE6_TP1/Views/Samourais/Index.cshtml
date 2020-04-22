@@ -20,6 +20,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Arme)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArtsMartiaux)
+        </th>
         <th></th>
     </tr>
 
@@ -36,7 +39,19 @@
         @{
             if (item.Arme != null)
             {
-                @Html.ActionLink(item.Arme.Nom, "Details", "Armes", new { item.Arme.Id}, null)
+                @Html.ActionLink(item.Arme.Nom, "Details", "Armes", new { item.Arme.Id }, null)
+            }
+        }
+    </td>
+    <td>
+        @{
+            if (item.ArtsMartiaux != null)
+            {
+                foreach (MODULE6_TP1_BO.ArtMartial art in item.ArtsMartiaux)
+                {
+                    @Html.ActionLink(art.Nom, "Details", "ArtMartials", new { art.Id }, null)
+                }
+
             }
         }
     </td>

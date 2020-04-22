@@ -4,5 +4,6 @@
     {
         public string Nom { get; set; }
         public int Degats { get; set; }
+        public virtual Samourai Samourai { get; set; }
     }
 }

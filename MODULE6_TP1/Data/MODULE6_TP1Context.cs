@@ -26,7 +26,10 @@ namespace MODULE6_TP1.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Ignore<Recordable>();
-            /*modelBuilder.Entity<Samourai>().HasOptional(s => s.Arme).WithOptionalDependent();*/
+            modelBuilder.Entity<Arme>().HasOptional(a => a.Samourai).WithOptionalDependent(s => s.Arme);
+            modelBuilder.Entity<Samourai>().HasMany(s => s.ArtsMartiaux).WithMany();
         }
+
+        public System.Data.Entity.DbSet<MODULE6_TP1_BO.ArtMartial> ArtMartials { get; set; }
     }
 }
