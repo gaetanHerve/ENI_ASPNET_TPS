@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MODULE6_TP1_BO;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -20,7 +21,15 @@ namespace MODULE6_TP1.Data
         }
 
         public System.Data.Entity.DbSet<MODULE6_TP1_BO.Samourai> Samourais { get; set; }
-
         public System.Data.Entity.DbSet<MODULE6_TP1_BO.Arme> Armes { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Ignore<Recordable>();
+            modelBuilder.Entity<Arme>().HasOptional(a => a.Samourai).WithOptionalDependent(s => s.Arme);
+            modelBuilder.Entity<Samourai>().HasMany(s => s.ArtsMartiaux).WithMany();
+        }
+
+        public System.Data.Entity.DbSet<MODULE6_TP1_BO.ArtMartial> ArtMartials { get; set; }
     }
 }
