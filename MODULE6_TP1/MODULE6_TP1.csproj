@@ -137,7 +137,24 @@
     <Compile Include="Migrations\202004211243098_init.Designer.cs">
       <DependentUpon>202004211243098_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004211309221_m2.cs" />
+    <Compile Include="Migrations\202004211309221_m2.Designer.cs">
+      <DependentUpon>202004211309221_m2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004211447100_m3.cs" />
+    <Compile Include="Migrations\202004211447100_m3.Designer.cs">
+      <DependentUpon>202004211447100_m3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004211508260_m4.cs" />
+    <Compile Include="Migrations\202004211508260_m4.Designer.cs">
+      <DependentUpon>202004211508260_m4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004211511365_m5.cs" />
+    <Compile Include="Migrations\202004211511365_m5.Designer.cs">
+      <DependentUpon>202004211511365_m5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\SamouraiVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -189,7 +206,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -213,6 +229,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202004211243098_init.resx">
       <DependentUpon>202004211243098_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004211309221_m2.resx">
+      <DependentUpon>202004211309221_m2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004211447100_m3.resx">
+      <DependentUpon>202004211447100_m3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004211508260_m4.resx">
+      <DependentUpon>202004211508260_m4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004211511365_m5.resx">
+      <DependentUpon>202004211511365_m5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
