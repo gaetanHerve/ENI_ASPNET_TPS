@@ -115,7 +115,7 @@ namespace MODULE6_TP1.Controllers
             foreach (Samourai samourai in samourais)
             {
                 samourai.Arme = null;
-                db.Entry(samourai).State = EntityState.Modified; // ICI ??
+                db.Entry(samourai).State = EntityState.Modified;
             }
             db.Armes.Remove(arme);
             db.SaveChanges();
