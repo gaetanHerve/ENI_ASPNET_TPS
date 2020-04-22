@@ -12,6 +12,6 @@ namespace MODULE6_TP1.Models
         public Samourai Samourai { get; set; }
         [Display(Name = "Arme")]
         public List<Arme> ArmesDisponibles { get; set; }
-        public int IdArme { get; set; }
+        public int? IdArme { get; set; }
     }
 }

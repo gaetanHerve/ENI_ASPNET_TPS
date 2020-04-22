@@ -88,7 +88,10 @@ namespace MODULE6_TP1.Controllers
                 Samourai = samourai,
                 ArmesDisponibles = db.Armes.ToList()
             };
-            // Id samourai in samouraiVm OK
+            if (samourai.Arme != null)
+            {
+                samouraiVm.IdArme = samourai.Arme.Id;
+            }
             return View(samouraiVm);
         }
 
@@ -97,7 +100,7 @@ namespace MODULE6_TP1.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(SamouraiVM samouraiVm) // Pas d'Id pour samouraiVm.Samourai
+        public ActionResult Edit(SamouraiVM samouraiVm)
         {
             if (ModelState.IsValid)
             {

@@ -153,6 +153,10 @@
     <Compile Include="Migrations\202004211511365_m5.Designer.cs">
       <DependentUpon>202004211511365_m5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004220924249_m6.cs" />
+    <Compile Include="Migrations\202004220924249_m6.Designer.cs">
+      <DependentUpon>202004220924249_m6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SamouraiVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -241,6 +245,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004211511365_m5.resx">
       <DependentUpon>202004211511365_m5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004220924249_m6.resx">
+      <DependentUpon>202004220924249_m6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
