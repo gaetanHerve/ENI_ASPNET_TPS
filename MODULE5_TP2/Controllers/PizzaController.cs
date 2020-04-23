@@ -37,7 +37,7 @@ namespace MODULE5_TP2.Controllers
         {
             try
             {
-                if (ModelState.IsValid && IsNameUnique(pizzaVm) && IsIngredientListUnique(pizzaVm))
+                if (ModelState.IsValid && IsNameUnique(pizzaVm, "create") && IsIngredientListOk(pizzaVm))
                 {
                     Pizza pizza = new Pizza();
                     pizza.Id = FakeDbPizza.Instance.Pizzas.Count == 0 ? 1 : FakeDbPizza.Instance.Pizzas.Max(x => x.Id) + 1;
@@ -90,7 +90,7 @@ namespace MODULE5_TP2.Controllers
         {
             try
             { 
-                if (ModelState.IsValid && IsNameUnique(pizzaVm) && IsIngredientListUnique(pizzaVm))
+                if (ModelState.IsValid && IsNameUnique(pizzaVm, "Edit") && IsIngredientListOk(pizzaVm))
                 {
                     Pizza pizza = FakeDbPizza.Instance.Pizzas.FirstOrDefault(p => p.Id == id);
                     pizza.Nom = pizzaVm.Pizza.Nom;
@@ -101,7 +101,6 @@ namespace MODULE5_TP2.Controllers
                 pizzaVm.Ingredients = FakeDbPizza.Instance.IngredientsDisponibles;
                 pizzaVm.Pates = FakeDbPizza.Instance.PatesDisponibles;
                 return View(pizzaVm);
-
             }
             catch
             {
@@ -139,21 +138,30 @@ namespace MODULE5_TP2.Controllers
             return result;
         }
 
-        private bool IsNameUnique(PizzaVM vm)
+        private bool IsNameUnique(PizzaVM vm, string action)
         {
+            bool result = true;
             // TODO : Dans le cas d'un edit, Retirer la pizza que l'on édite de la liste des pizzas comparer
-            bool result = !FakeDbPizza.Instance.Pizzas.Any(p => p.Nom == vm.Pizza.Nom);
+            var debug = FakeDbPizza.Instance.Pizzas.Where(p => p.Id == vm.Pizza.Id).ToList();
+            /*db.ArtMartials.Where(adb => samouraiVm.IdsSelectedArts.Any(avm => avm == adb.Id)).ToList()*/
+            if (action == "Edit")
+            {
+                result = FakeDbPizza.Instance.Pizzas.Where(p => p.Id != vm.Pizza.Id).ToList().Any(p => p.Nom == vm.Pizza.Nom);
+            } else
+            {
+                result = !FakeDbPizza.Instance.Pizzas.Any(p => p.Nom == vm.Pizza.Nom);
+            }
             if (!result)
                 ModelState.AddModelError("Pizza.Nom", "Il existe déjà une pizza portant ce nom");
             return result;
         }
 
-        private bool IsIngredientListUnique(PizzaVM vm)
+        private bool IsIngredientListOk(PizzaVM vm)
         {
             // TODO : Dans le cas d'un edit, Retirer la pizza que l'on édite de la liste des pizzas comparer
             bool result = true;
 
-            foreach (var pizza in FakeDbPizza.Instance.Pizzas)
+            foreach (Pizza pizza in FakeDbPizza.Instance.Pizzas)
             {
                 if (pizza.Ingredients.Select(i => i.Id).SequenceEqual(vm.IdIngredients))
                 {
@@ -161,6 +169,11 @@ namespace MODULE5_TP2.Controllers
                     ModelState.AddModelError("IdIngredients", "Il existe déjà une pizza composée de ces ingrédients");
                     break;
                 }
+            }
+            if (vm.IdIngredients.Count < 2 || vm.IdIngredients.Count > 5)
+            {
+                result = false;
+                ModelState.AddModelError("IdIngredients", "Une pizza doit posséder entre 2 et 5 ingrédients");
             }
             return result;
         }

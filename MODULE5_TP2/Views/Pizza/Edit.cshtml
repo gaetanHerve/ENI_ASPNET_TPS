@@ -5,7 +5,7 @@
 }
 
 <h2>Edit</h2>
-
+@Html.HiddenFor(model => model.Pizza.Id)
 @Html.Partial("_PizzaEditor", Model)
 
 @section Scripts {
