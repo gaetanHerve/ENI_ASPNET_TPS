@@ -92,7 +92,9 @@ namespace MODULE6_TP1.Controllers
             {
                 Samourai = samourai,
                 ArmesDisponibles = db.Armes.Where(a => (a.Samourai == null || a.Samourai.Id == samourai.Id)).ToList(),
-                ArtsDisponibles = db.ArtMartials.ToList()
+                ArtsDisponibles = db.ArtMartials.ToList(),
+                // Ajout preselect artsmartiaux
+                IdsSelectedArts = samourai.ArtsMartiaux.Select(a => a.Id).ToList()
             };
             if (samourai.Arme != null)
             {
@@ -113,7 +115,7 @@ namespace MODULE6_TP1.Controllers
                 Samourai samourai = db.Samourais.Include(s => s.Arme).Include(s => s.ArtsMartiaux).FirstOrDefault(x => x.Id == samouraiVm.Samourai.Id);
                 
                 /*db.Samourais.Attach(samourai);*/
-                
+
                 samourai.Nom = samouraiVm.Samourai.Nom;
                 samourai.Force = samouraiVm.Samourai.Force;
                 if (samouraiVm.IdArme != 0)
