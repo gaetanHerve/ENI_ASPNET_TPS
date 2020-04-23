@@ -23,6 +23,9 @@
         <th>
             @Html.DisplayNameFor(model => model.ArtsMartiaux)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Potentiel)
+        </th>
         <th></th>
     </tr>
 
@@ -50,10 +53,14 @@
                 foreach (MODULE6_TP1_BO.ArtMartial art in item.ArtsMartiaux)
                 {
                     @Html.ActionLink(art.Nom, "Details", "ArtMartials", new { art.Id }, null)
+        <br />
                 }
 
             }
         }
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Potentiel)
     </td>
     <td>
         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
