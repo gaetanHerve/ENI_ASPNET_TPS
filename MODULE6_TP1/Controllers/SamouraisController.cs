@@ -43,7 +43,7 @@ namespace MODULE6_TP1.Controllers
             SamouraiVM samouraiVm = new SamouraiVM()
             {
                 Samourai = new Samourai(),
-                ArmesDisponibles = db.Armes.ToList(),
+                ArmesDisponibles = db.Armes.Where(a => a.Samourai == null).ToList(),
                 ArtsDisponibles = db.ArtMartials.ToList()
             };
             return View(samouraiVm);
@@ -91,7 +91,7 @@ namespace MODULE6_TP1.Controllers
             SamouraiVM samouraiVm = new SamouraiVM()
             {
                 Samourai = samourai,
-                ArmesDisponibles = db.Armes.ToList(),
+                ArmesDisponibles = db.Armes.Where(a => (a.Samourai == null || a.Samourai.Id == samourai.Id)).ToList(),
                 ArtsDisponibles = db.ArtMartials.ToList()
             };
             if (samourai.Arme != null)

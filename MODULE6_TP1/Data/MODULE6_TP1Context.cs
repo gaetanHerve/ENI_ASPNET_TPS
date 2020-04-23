@@ -28,6 +28,7 @@ namespace MODULE6_TP1.Data
             modelBuilder.Ignore<Recordable>();
             modelBuilder.Entity<Arme>().HasOptional(a => a.Samourai).WithOptionalDependent(s => s.Arme);
             modelBuilder.Entity<Samourai>().HasMany(s => s.ArtsMartiaux).WithMany();
+            modelBuilder.Entity<Samourai>().Ignore(s => s.Potentiel);
         }
 
         public System.Data.Entity.DbSet<MODULE6_TP1_BO.ArtMartial> ArtMartials { get; set; }
