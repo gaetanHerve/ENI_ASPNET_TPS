@@ -83,7 +83,7 @@ namespace MODULE6_TP1.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             /*Samourai samourai = db.Samourais.Find(id);*/
-            Samourai samourai = db.Samourais.Include(x => x.Arme).FirstOrDefault(x => x.Id == id);
+            Samourai samourai = db.Samourais.Include(s => s.Arme).FirstOrDefault(s => s.Id == id);
             if (samourai == null)
             {
                 return HttpNotFound();
@@ -112,9 +112,14 @@ namespace MODULE6_TP1.Controllers
         {
             if (ModelState.IsValid)
             {
-                Samourai samourai = db.Samourais.Include(s => s.Arme).Include(s => s.ArtsMartiaux).FirstOrDefault(x => x.Id == samouraiVm.Samourai.Id);
-                
+                Samourai samourai = db.Samourais.Include(s => s.Arme).Include(s => s.ArtsMartiaux).FirstOrDefault(s => s.Id == samouraiVm.Samourai.Id);
+
                 /*db.Samourais.Attach(samourai);*/
+
+                foreach (ArtMartial item in samourai.ArtsMartiaux)
+                {
+                    db.Entry(item).State = EntityState.Modified;
+                }
 
                 samourai.Nom = samouraiVm.Samourai.Nom;
                 samourai.Force = samouraiVm.Samourai.Force;

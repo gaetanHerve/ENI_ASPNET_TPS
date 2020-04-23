@@ -13,6 +13,7 @@ namespace MODULE6_TP1.Models
         [Display(Name = "Arme")]
         public List<Arme> ArmesDisponibles { get; set; }
         public int? IdArme { get; set; }
+        [Display(Name = "Arts martiaux")]
         public List<ArtMartial> ArtsDisponibles { get; set; }
         public List<int> IdsSelectedArts { get; set; } = new List<int>();
     }

@@ -123,7 +123,7 @@ namespace MODULE6_TP1.Controllers
                 db.Armes.Remove(arme);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }   
+            }
         }
 
         protected override void Dispose(bool disposing)
