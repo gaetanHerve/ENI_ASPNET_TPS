@@ -10,12 +10,11 @@ namespace MODULE6_TP1_BO
         public virtual Arme Arme { get; set; }
         [Display(Name = "Arts martiaux maîtrisés")]
         public virtual List<ArtMartial> ArtsMartiaux { get; set; } = new List<ArtMartial>();
-        private int potentiel;
         public int Potentiel
         {
             get
             {
-                potentiel = Force;
+                int potentiel = Force;
                 if (Arme != null)
                 {
                     potentiel += Arme.Degats;
@@ -23,7 +22,6 @@ namespace MODULE6_TP1_BO
                 potentiel *= (ArtsMartiaux.Count + 1);
                 return potentiel;
             }
-            set{ potentiel = value; }
         }
     }
 }
