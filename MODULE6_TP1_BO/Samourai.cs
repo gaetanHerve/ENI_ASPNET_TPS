@@ -8,5 +8,6 @@ namespace MODULE6_TP1_BO
         public string Nom { get; set; }
         public virtual Arme Arme { get; set; }
         public virtual List<ArtMartial> ArtsMartiaux { get; set; } = new List<ArtMartial>();
+        public int Potentiel { get; set; }
     }
 }

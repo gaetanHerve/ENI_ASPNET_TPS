@@ -115,7 +115,7 @@ namespace MODULE6_TP1.Controllers
 
             if (possesseur != null)
             {
-                string message = "Si vous êtes attaché à votre intégrité physique, vueillez d'abord en parler à " + possesseur.Nom + " !"; 
+                string message = "Si vous êtes attaché à votre intégrité physique, veuillez d'abord consulter " + possesseur.Nom + " !"; 
                 ModelState.AddModelError("", message);
                 return View(arme);
             } else
